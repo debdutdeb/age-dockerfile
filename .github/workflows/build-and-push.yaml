@@ -1,0 +1,26 @@
+name: Build and push to dockerhub
+
+on:
+  push:
+    branches:
+      - main
+
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: docker/login-action@v2
+        with:
+          username: debdutdeb
+          password: ${{secrets.DOCKER_TOKEN}}
+
+      - uses: docker/build-push-action@v3
+        with:
+          context: ${{ github.workspace }}
+          platforms: linux/amd64
+          push: true
+          tags: debdutdeb/filosottile-age:latest
